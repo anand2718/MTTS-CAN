@@ -31,14 +31,16 @@ def predict_vitals(args):
 
     interpreter = tf.lite.Interpreter(model_path="C:/Users/anand/Documents/Current/Pulse/MTTS-CAN/code/model.tflite")
     input_details = interpreter.get_input_details()
-    interpreter.resize_tensor_input(input_details[0]['index'], (2, frame_depth, 36, 36, 3))
+    print("Before: " + str(input_details))
+    interpreter.resize_tensor_input(input_details[0]['index'], [1, 36, 36, 3])
     interpreter.allocate_tensors()
     input_details = interpreter.get_input_details()
+    print("After: " + str(input_details))
     output_details = interpreter.get_output_details()
 
     # print("Shape of input: " + str(dXsub.shape))
     # yptest = model.predict((dXsub[:, :, :, :3], dXsub[:, :, :, -3:]), batch_size=batch_size, verbose=1)
-    chunks = np.split(dXsub, dXsub_len/ frame_depth, 0)
+    chunks = np.split(dXsub, dXsub_len/frame_depth, 0)
     pulse_list: list = list()
     resp_list: list = list()
     for chunk in chunks:
