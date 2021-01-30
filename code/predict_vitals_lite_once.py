@@ -29,7 +29,7 @@ def predict_vitals(args):
     #model = MTTS_CAN(frame_depth, 32, 64, (img_rows, img_cols, 3))
     #model.load_weights(model_checkpoint)
 
-    interpreter = tf.lite.Interpreter(model_path="C:/Users/anand/Documents/Current/Pulse/MTTS-CAN/code/model.tflite")
+    interpreter = tf.lite.Interpreter(model_path="./code/model.tflite")
     input_details = interpreter.get_input_details()
     print("Before: " + str(input_details))
     interpreter.resize_tensor_input(input_details[0]['index'], [dXsub_len, img_rows, img_cols, 3])
